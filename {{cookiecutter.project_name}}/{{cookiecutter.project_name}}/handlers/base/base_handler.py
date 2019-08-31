@@ -1,30 +1,20 @@
 # coding=utf-8
 import tornado.escape
-from pycket.session import SessionMixin
 import tornado.websocket
 import tornado.web
-from pycket.session import SessionMixin
-from libs.db.dbsession import dbSession
-from models.user.user_model import user_model
+from {{cookiecutter.package_name}}.libs.db.dbsession import dbSession
 
 
-class BaseHandler(tornado.web.RequestHandler, SessionMixin):
+class BaseHandler(tornado.web.RequestHandler):
     def initialize(self):
         self.db = dbSession
-
-    def get_current_user(self):
-        if self.session.get("username"):
-            return user_model.by_name(self.session.get("username"))
-        else:
-            return None
 
     def on_finish(self):
         self.db.close()
 
-
-class BaseWebSocket(tornado.websocket.WebSocketHandler, SessionMixin):
-    def get_current_user(self):
-        if self.session.get("username"):
-            return user_model.by_name(self.session.get("username"))
-        else:
-            return None
+    def set_default_headers(self):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET')
+        self.set_header('Access-Control-Max-Age', 1000)
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_header('Content-type', 'application/json')
