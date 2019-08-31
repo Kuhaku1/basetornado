@@ -21,7 +21,7 @@
 <body>
     <div class="login">
         {#这个地方/login?name=是表示之前从哪里来的，登录成功后重定向到这个地方去#}
-        <form action="/login?name={{next}}" method="post">
+        <form action="/login?name={\{next}}" method="post">
             <fieldset>
                 <legend>用户登录</legend>
                 <table>
