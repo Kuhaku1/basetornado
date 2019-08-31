@@ -17,10 +17,12 @@
         }
     </style>
 </head>
+{% raw %}
 
 <body>
     <div class="login">
         <form action="/register" method="post">
+            {% module xsrf_form_html() %}
             <fieldset>
                 <legend>用户注册</legend>
                 <table>
@@ -47,5 +49,6 @@
         </form>
     </div>
 </body>
+{% endraw %}
 
 </html>
